@@ -1,0 +1,322 @@
+car <- read.csv("D:/University of Ruhuna/FMIS4/case study/data_analysis/Car prices.csv")#read data set
+#The structure of the data
+str(car)
+summary(car)
+dim(car)
+
+# Count the number of missing values in each column
+sum(is.na(car))
+
+unique(car)
+
+names(car)
+
+car$car_ID <- NULL
+car$CarName <- NULL
+
+#Numeric Variables
+#Box Plot
+boxplot(car$price,
+        xlab="continious variable",ylab="price range",
+        col = "coral",main="box plot")
+boxplot(car$highwaympg,
+        xlab="continious variable",ylab="price range",
+        col = "chartreuse",main="box plot")
+boxplot(car$citympg,
+        xlab="continious variable",ylab="price range",
+        col = "cadetblue1",main="box plot")
+boxplot(car$peakrpm,
+        xlab="continious variable",ylab="price range",
+        col = "chocolate1",main="box plot")
+boxplot(car$horsepower,
+        xlab="continious variable",ylab="price range",
+        col = "burlywood2",main="box plot")
+boxplot(car$enginesize,
+        xlab="continious variable",ylab="price range",
+        col = "brown2",main="box plot")
+
+# Load the required libraries
+library(ggplot2)
+###########
+m2 = ggplot(car, aes(x=enginelocation, y=price)) +
+  geom_boxplot(aes(fill= enginelocation,shape = enginelocation))
+m3 = ggplot(car, aes(x=fueltype, y=price)) +
+  geom_boxplot(aes(fill= fueltype,shape = fueltype))
+m4 = ggplot(car, aes(x=aspiration, y=price)) +
+  geom_boxplot(aes(fill= aspiration,shape = aspiration))
+m5 = ggplot(car, aes(x=doornumber, y=price)) +
+  geom_boxplot(aes(fill= doornumber,shape = doornumber))
+m6 = ggplot(car, aes(x=carbody, y=price)) +
+  geom_boxplot(aes(fill= carbody,shape = carbody))
+m7 = ggplot(car, aes(x=drivewheel, y=price)) +
+  geom_boxplot(aes(fill= drivewheel,shape = drivewheel))
+m8 = ggplot(car, aes(x=enginetype, y=price)) +
+  geom_boxplot(aes(fill= enginetype))
+m9 = ggplot(car, aes(x=cylindernumber, y=price)) +
+  geom_boxplot(aes(fill= cylindernumber))
+m10 = ggplot(car, aes(x=fuelsystem, y=price)) +
+  geom_boxplot(aes(fill= fuelsystem))
+grid.arrange(m2,m3,m4,m5, nrow = 2)
+
+grid.arrange(m6,m7, nrow = 2)
+grid.arrange(m8,m9, nrow= 2)
+grid.arrange(m10)
+
+##########
+
+car_0 <- car[,-c(2,3,4,5,6,7,13,14,16)]
+str(car_0)
+
+# Scatter Plot: horsepower vs. price with line of best fit
+ggplot(car, aes(x = horsepower, y = price)) +
+  geom_point(color = "navyblue") +
+  geom_smooth(method = "lm", color = "firebrick2", se = FALSE) +  # Adding the line of best fit
+  labs(title = "Scatter Plot: Horsepower vs. Price with Line of Best Fit",
+       x = "Horsepower",
+       y = "Price")
+
+# Scatter Plot: peakrpm vs. price with line of best fit
+ggplot(car, aes(x = peakrpm, y = price)) +
+  geom_point(color = "darkgreen") +
+  geom_smooth(method = "lm", color = "maroon", se = FALSE) +  # Adding the line of best fit
+  labs(title = "Scatter Plot: Peak RPM vs. Price with Line of Best Fit",
+       x = "Peak RPM",
+       y = "Price")
+
+# Scatter Plot: carlength vs. carwidth with line of best fit
+ggplot(car, aes(x = carlength, y = carwidth)) +
+  geom_point(color = "purple") +
+  geom_smooth(method = "lm", color = "coral4", se = FALSE) +  # Adding the line of best fit
+  labs(title = "Scatter Plot: Car Length vs. Car Width with Line of Best Fit",
+       x = "Car Length",
+       y = "Car Width")
+
+# Histogram for "horsepower"
+ggplot(car, aes(x = horsepower)) +
+  geom_histogram(binwidth = 10, fill = "skyblue", color = "black") +
+  labs(title = "Distribution of Horsepower",
+       x = "Horsepower",
+       y = "Frequency")
+
+# Histogram for "peakrpm"
+ggplot(car, aes(x = peakrpm)) +
+  geom_histogram(binwidth = 100, fill = "green", color = "black") +
+  labs(title = "Distribution of Peak RPM",
+       x = "Peak RPM",
+       y = "Frequency")
+
+# Histogram for "price"
+ggplot(car, aes(x = price)) +
+  geom_histogram(binwidth = 1000, fill = "purple", color = "black") +
+  labs(title = "Distribution of Price",
+       x = "Price",
+       y = "Frequency")
+
+#Categorical Variables
+#Barplots
+
+# Bar Plot for "fueltype"
+ggplot(car, aes(x = fueltype)) +
+  geom_bar(fill = "steelblue") +
+  labs(title = "Distribution of Fuel Types",
+       x = "Fuel Type",
+       y = "Count")
+
+# Bar Plot for "aspiration"
+ggplot(car, aes(x = aspiration)) +
+  geom_bar(fill = "gold3") +
+  labs(title = "Distribution of Aspiration Types",
+       x = "Aspiration",
+       y = "Count")
+
+# Bar Plot for "doornumber"
+ggplot(car, aes(x = doornumber)) +
+  geom_bar(fill = "darkorchid2") +
+  labs(title = "Distribution of Door Numbers",
+       x = "Door Number",
+       y = "Count")
+
+# Bar Plot for "carbody"
+ggplot(car, aes(x = carbody)) +
+  geom_bar(fill = "darkolivegreen") +
+  labs(title = "Distribution of Car Body Types",
+       x = "Car Body Type",
+       y = "Count")
+
+#pie charts
+
+# Pie Chart for "fueltype"
+ggplot(car, aes(x = "", fill = fueltype)) +
+  geom_bar(width = 1) +
+  coord_polar("y") +
+  labs(title = "Distribution of Fuel Types")
+
+# Pie Chart for "aspiration"
+ggplot(car, aes(x = "", fill = aspiration)) +
+  geom_bar(width = 1) +
+  coord_polar("y") +
+  labs(title = "Distribution of Aspiration Types")
+
+# Pie Chart for "doornumber"
+ggplot(car, aes(x = "", fill = doornumber)) +
+  geom_bar(width = 1) +
+  coord_polar("y") +
+  labs(title = "Distribution of Door Numbers")
+
+# Pie Chart for "carbody"
+ggplot(car, aes(x = "", fill = carbody)) +
+  geom_bar(width = 1) +
+  coord_polar("y") +
+  labs(title = "Distribution of Car Body Types")
+
+#install.packages("GGally")
+# Load the required libraries
+library(GGally)
+
+# Selecting some numeric variables for the pairwise scatterplot matrix
+selected_vars <- c("wheelbase","carlength","carwidth","carheight","curbweight",
+                   "enginesize","boreratio","stroke","compressionratio","horsepower",
+                   "peakrpm","citympg","highwaympg","price")
+
+# Creating the pairwise scatterplot matrix
+ggpairs(car[selected_vars], lower = list(continuous = "points"), diag = list(continuous = "density"))
+
+#Correlation Heatmap
+# Load the required libraries
+#install.packages("corrplot")
+library(corrplot)
+
+# Selecting only numeric variables for the correlation matrix
+numeric_vars <- car[, sapply(car, is.numeric)]
+
+# Compute the correlation matrix
+cor_matrix <- cor(numeric_vars)
+
+# Create the correlation heatmap
+corrplot(cor_matrix, method = "color", type = "upper", tl.col = "black", tl.srt = 45)
+
+#Plot of all numerical variable elaborately
+# Selecting only numeric variables (excluding "car_ID" and "symboling")
+numeric_vars <- car[, sapply(car, is.numeric) & !(names(car) %in% c("car_ID", "symboling"))]
+
+# Creating scatter plots for all numeric variables against "price"
+plots_list <- lapply(names(numeric_vars), function(var) {
+  ggplot(car, aes_string(x = var, y = "price")) +
+    geom_point(color = "blue") +
+    geom_smooth(method = "lm", color = "red", se = FALSE) +
+    labs(title = paste("Scatter Plot:", var, "vs. Price"),
+         x = var,
+         y = "Price")
+})
+
+# Arranging all plots in a grid
+library(gridExtra)
+grid.arrange(grobs = plots_list, ncol = 3)
+
+#####################################################################
+#################       Quantitative analysis      ##################
+#####################################################################
+library(dplyr)
+
+ggcorr(car, label = TRUE, label_size = 3, hjust = 1, layout.exp = 2)
+
+# remove cylinder number with only 1 instance
+cylinder <- car %>% count(cylindernumber) %>% filter(n > 3)
+car <- car[car$cylindernumber %in% cylinder$cylindernumber, ]
+car$cylindernumber <- factor(car$cylindernumber, unique(car$cylindernumber))
+# remove fueltype with only 1 instance
+fuel <- car %>% count(fuelsystem) %>% filter(n > 3)
+car <- car[car$fuelsystem %in% fuel$fuelsystem, ]
+car$fuelsystem <- factor(car$fuelsystem, unique(car$fuelsystem))
+# remove engine type with 1 instance
+engine <- car %>% count(enginetype) %>% filter(n > 3)
+car <- car[car$enginetype %in% engine$enginetype, ]
+car$enginetype <- factor(car$enginetype, unique(car$enginetype))
+
+car <- car%>%mutate_if(~is.character(.),~is.factor(.))
+
+
+set.seed(123)
+traning <- sample(1:nrow(car),size = round(0.80*nrow(car)),replace = F)
+traning
+
+test <- setdiff(1:nrow(car),traning)
+test #test data set
+
+traning <- car[traning,]
+test <- car[test,]
+
+
+car_lm <- lm(price~.,data = traning)
+summary(car_lm)
+
+car_1 <- car %>% select(aspiration, carbody, enginelocation, carwidth,
+                     curbweight, enginetype, cylindernumber,
+                     enginesize, stroke, peakrpm, price)
+str(car_1)
+
+set.seed(123)
+traning_1 <- sample(1:nrow(car_1),size = round(0.80*nrow(car_1)),replace = F)
+traning_1
+
+test_1 <- setdiff(1:nrow(car_1),traning_1)
+test_1
+
+traning_1 <- car_1[traning_1,]
+test_1 <- car_1[test_1,]
+
+car_lm1 <- lm(price~.,data = traning_1)
+summary(car_lm1)
+
+#RMSE(for 1st model)
+lm_pred <- predict (car_lm, newdata = test%>%select(-price))
+
+# Assuming you have 'obs' and 'pred' vectors:
+obs <- traning$price
+pred <- car_lm$fitted.values
+
+# Calculate RMSE using the Metrics package
+library(Metrics)
+rmse(car_lm$fitted.values,traning$price)
+rmse(lm_pred, test$price)
+
+ggcorr(car_1, label = TRUE, label_size = 3, hjust = 1, layout.exp = 2)
+
+car_2 <- car_1 %>% select(-c(enginesize, carbody))
+car_2 <- car_2 %>% mutate_if(~is.numeric(.), ~log10(.))
+
+set.seed(123)
+traning_2 <- sample(1:nrow(car_2),size = round(0.80*nrow(car_2)),replace = F)
+traning_2 
+
+test_2 <- setdiff(1:nrow(car_2),traning_2)
+test_2
+
+traning_2 <- car_2[traning_2,]
+test_2 <- car_2[test_2,]
+
+#Buildng the Model(for training Data set)
+set.seed(123)
+car_lm2 <- lm(price~.,data = traning_2)
+summary(car_lm2)
+
+# Model Evaluation
+#RMSE(for 3rd Model)
+lm_pred2 <- predict(car_lm2, newdata = test_2 %>% select(-price))
+# RMSE of train dataset
+rmse(10^(car_lm2$fitted.values),10^(traning_2$price))
+# RMSE of test dataset
+rmse(10^(lm_pred2),10^(test_2$price))
+
+#checking the model for test data set
+car_lm2_test <- lm(price~., data = test_2)
+summary(car_lm2_test)
+
+#Checking the assumptions
+#Linearity
+graph <- data.frame(residual = car_lm2$residuals, fitted = car_lm2$fitted.values)
+graph %>% ggplot(aes(fitted, residual)) + geom_point() + geom_hline(aes(yintercept = 0)) +
+  geom_smooth() + theme(panel.grid = element_blank(),
+                        panel.background = element_blank())
+
+#Normality Test
